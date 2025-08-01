@@ -1,0 +1,654 @@
+{
+  "build": {
+    "directory": {
+      "Powershell":{
+        "use":"Create directory to store compiled files.",
+        "cmd": "mkdir {{path}}"
+      },
+      "CMD":{
+        "use": "Create directory to store compiled files.",
+        "cmd": "mkdir {{path}}"
+      },
+      "Linux":{
+        "use": "Create directory to store compiled files.",
+        "cmd": "mkdir {{path}}"
+      }
+    },
+    "filesByCmake":{
+      "Powershell":{
+        "use":"Build using CMake with MinGW Makefiles.",
+        "cmd":"cmake .. -G \"MinGW Makefiles\"",
+        "dependsOn":["install.cpp", "install.cmake"]
+      },
+      "CMD": {
+        "use":"Build using CMake with MinGW Makefiles.",
+        "cmd":"cmake .. -G \"MinGW Makefiles\"",
+        "dependsOn":["install.cpp", "install.cmake"]
+      },
+      "Linux":{
+        "use":"Build using CMake with default generator on Linux.",
+        "cmd":"cmake ..",
+        "dependsOn":["install.cpp", "install.cmake"]
+      }
+    },
+    "gcc":{
+      "Powershell":{
+        "use":"Compile C files using GCC.",
+        "cmd":"gcc {{path}}.c -o {{path}}",
+        "dependsOn":["install.cpp"]
+      },
+      "CMD": {
+        "use":"Compile C files using GCC.",
+        "cmd":"gcc {{path}}.c -o {{path}}",
+        "dependsOn":["install.cpp"]
+      },
+      "Linux": {
+        "use":"Compile C files using GCC.",
+        "cmd":"gcc {{path}}.c -o {{path}}",
+        "dependsOn":["install.cpp"]
+      }
+    },
+    "g++": {
+      "Powershell":{
+        "use":"Compile C++ files using G++.",
+        "cmd":"g++ {{path}}.cpp -o {{path}}",
+        "dependsOn":["install.cpp"]
+      },
+      "CMD":{
+        "use":"Compile C++ files using G++.",
+        "cmd":"g++ {{path}}.cpp -o {{path}}",
+        "dependsOn":["install.cpp"]
+      },
+      "Linux":{
+        "use":"Compile C++ files using G++.",
+        "cmd":"g++ {{path}}.cpp -o {{path}}",
+        "dependsOn":["install.cpp"]
+      }
+    },
+    "make": {
+      "Powershell": {
+        "use":"Run MinGW-Make.",
+        "cmd":"mingw32-make",
+        "dependsOn":["install.cpp","install.make"]
+      },
+      "CMD": {
+        "use":"Run MinGW-Make.",
+        "cmd":"mingw32-make",
+        "dependsOn":["install.cpp","install.make"]
+      },
+      "Linux": {
+        "use":"Run Make.",
+        "cmd":"make",
+        "dependsOn":["install.cpp","install.make"]
+      }
+    },
+    "java":{
+      "Powershell":{
+        "use":"Compile Java files using javac.",
+        "cmd":"javac {{path}}.java",
+        "dependsOn":["install.java"]
+      },
+      "CMD":{
+        "use":"Compile Java files using javac.",
+        "cmd":"javac {{path}}.java",
+        "dependsOn":["install.java"]
+      },
+      "Linux":{
+        "use":"Compile Java files using javac",
+        "cmd":"javac {{path}}.java",
+        "dependsOn":["install.java"]
+      }
+    },
+    "python":{
+      "Powershell":{
+        "use":"Check for syntax errors by compiling Python files.",
+        "cmd":"python -m py_compile {{path}}.py",
+        "dependsOn":["install.py"]
+      },
+      "CMD": {
+        "use":"Check for syntax errors by compiling Python files.",
+        "cmd":"py -m py_compile {{path}}.py",
+        "dependsOn":["install.py"]
+      },
+      "Linux":{
+        "use":"Check for syntax errors by compiling Python files.",
+        "cmd":"python3 -m py_compile {{path}}.py",
+        "dependsOn":["install.py"]
+      }
+    }
+  },
+
+  "readSavedCFiles":{
+    "getContent":{
+      "Powershell":{
+        "use":"Read and display the content of saved C files.",
+        "cmd":"Get-Content {{path}}.c"
+      },
+      "CMD":{
+        "use":"Read and display the content of saved C files.",
+        "cmd":"type {{path}}.c"
+      },
+      "Linux":{
+        "use":"Read and display the content of saved C files.",
+        "cmd":"cat {{path}}.c"
+      }
+    }
+  },
+
+  "run":{
+    "main":{
+      "Powershell":{
+        "cmd":".\\{{path}}.exe",
+        "dependsOn":["build.gcc"],
+        "use":"Run a compiled C/C++ executable."
+      },
+      "CMD":{
+        "cmd":".\\{{path}}.exe",
+        "dependsOn":["build.gcc"],
+        "use":"Run a compiled C/C++ executable."
+      },
+      "Linux":{
+        "cmd":"./{{path}}",
+        "dependsOn":["build.gcc"],
+        "use":"Run a compiled C/C++ executable."
+      }
+    },
+    "java":{
+      "Powershell":{
+        "cmd":"java {{path}}",
+        "dependsOn":["build.java"],
+        "use":"Run a compiled Java class."
+      },
+      "CMD":{
+        "cmd":"java {{path}}",
+        "dependsOn":["build.java"],
+        "use":"Run a compiled Java class."
+      },
+      "Linux":{
+        "cmd":"java {{path}}",
+        "dependsOn":["build.java"],
+        "use":"Run a compiled Java class."
+      }
+    },
+    "python":{
+      "Powershell":{
+        "cmd":"python {{path}}.py",
+        "dependsOn":["install.py"],
+      "use":"Run a Python script using Python."
+      },
+      "CMD":{
+        "cmd":"py {{path}}.py",
+        "dependsOn":["install.py"],
+        "use":"Run a Python script using Python Launcher."
+      },
+      "Linux":{
+        "cmd":"python3 {{path}}.py",
+        "dependsOn":["install.py"],
+        "use":"Run a Python script using Python 3."
+      }
+    }
+  },
+  "clean": {
+    "directory":{
+      "Powershell":{
+        "cmd":"Remove-Item -Recurse -Force {{path}}",
+        "use":"Delete the entire build directory recursively."
+     },
+      "CMD":{
+        "cmd":"rmdir /S /Q {{path}}",
+        "use":"Delete the entire build directory recursively."
+      },
+      "Linux":{
+        "cmd":"rm -rf {{path}}",
+        "use":"Delete the entire build directory recursively."
+      }
+    },
+    "cmakeCache":{
+      "Powershell":{
+        "cmd":"Remove-Item -Force CMakeCache.txt",
+        "use":"Remove the CMake cache file from the root directory."
+      },
+      "CMD": {
+        "cmd":"del /F CMakeCache.txt",
+        "use":"Remove the CMake cache file from the root directory."
+      },
+      "Linux":{
+        "cmd":"rm -f CMakeCache.txt",
+        "use":"Remove the CMake cache file from the root directory."
+      }
+    },
+    "exe":{
+      "Powershell":{
+        "cmd":"Remove-Item {{path}}.exe -Force",
+        "use":"Delete the compiled executable file."
+      },
+      "CMD":{
+        "cmd":"del {{path}}.exe",
+        "use":"Delete the compiled executable file."
+      },
+      "Linux":{
+        "cmd":"rm {{path}}",
+        "use":"Delete the compiled executable file."
+      }
+    },
+    "objectFiles":{
+      "Powershell":{
+        "cmd":"Remove-Item -Path .\\build\\*.o, .\\build\\*.obj -Recurse -Force",
+        "use":"Delete all object files from the build directory."
+      },
+      "CMD":{
+        "cmd":"del /s /q build\\*.o build\\*.obj",
+        "use":"Delete all object files from the build directory."
+      },
+      "Linux":{
+        "cmd":"find build -type f \\( -name '*.o' -o -name '*.obj' \\) -delete",
+        "use":"Delete all object files from the build directory."
+      }
+    }
+  },
+
+  "test":{
+  	"gcc":{
+	  	"Powershell":{
+		  	"cmd":"gcc {{path}}.c -o {{path}} && .\\{{path}}.exe",
+			  "dependsOn":["build.gcc"],
+  			"use":"Compile and run the C program using GCC."
+	  	},
+		  "CMD":{
+			  "cmd":"gcc {{path}}.c -o {{path}} && .\\{{path}}.exe",
+  			"dependsOn":["build.gcc"],
+	  		"use":"Compile and run the C program using GCC."
+		  },
+  		"Linux":{
+	  		"cmd":"gcc {{path}}.c -o {{path}} && ./{{path}}",
+		  	"dependsOn":["build.gcc"],
+			  "use":"Compile and run the C program using GCC."
+  		}
+	  },
+  	"py":{
+	  	"Powershell":{
+		  	"cmd":"pytest",
+			  "dependsOn":["install.py"],
+  			"use":"Run all Python unit tests using pytest."
+	  	},
+		  "CMD":{
+			  "cmd":"pytest",
+  			"dependsOn":["install.py"],
+	  		"use":"Run all Python unit tests using pytest."
+		  },
+  		"Linux":{
+	  		"cmd":"pytest",
+		  	"dependsOn":["install.py"],
+			  "use":"Run all Python unit tests using pytest."
+  		}
+	  },
+  	"java":{
+	  	"Powershell":{
+		  	"cmd":"java org.junit.runner.JUnitCore {{path}}Test",
+			  "dependsOn":["build.java"],
+  			"use":"Execute the Java JUnit test class."
+	  	},
+		  "CMD":{
+			  "cmd":"java org.junit.runner.JUnitCore {{path}}Test",
+  			"dependsOn":["build.java"],
+	  		"use":"Execute the Java JUnit test class."
+		  },
+  		"Linux":{
+	  		"cmd":"java org.junit.runner.JUnitCore {{path}}Test",
+		  	"dependsOn":["build.java"],
+			  "use":"Execute the Java JUnit test class."
+  		}
+	  }
+  },
+	"lint":{
+		"py":{
+			"Powershell":{
+				"cmd":"pylint",
+				"dependsOn":["install.py"],
+				"use":"Run pylint to check Python code style and errors."
+			},
+			"CMD":{
+				"cmd":"pylint",
+				"dependsOn":["install.py"],
+				"use":"Run pylint to check Python code style and errors."
+			},
+			"Linux":{
+				"cmd":"pylint",
+				"dependsOn":["install.py"],
+				"use":"Run pylint to check Python code style and errors."
+			}
+		},
+		"cpp":{
+			"Powershell":{
+				"cmd":"clang-tidy {{path}}.cpp",
+				"dependsOn":["install.cpp"],
+				"use":"Lint C++ code using clang-tidy."
+			},
+			"CMD":{
+				"cmd":"clang-tidy {{path}}.cpp",
+				"dependsOn":["install.cpp"],
+				"use":"Lint C++ code using clang-tidy."
+			},
+			"Linux":{
+				"cmd":"clang-tidy {{path}}.cpp",
+				"dependsOn":["install.cpp"],
+				"use":"Lint C++ code using clang-tidy."
+			}
+		}
+	},
+
+	"git":{
+		"check":{
+			"Powershell":{
+				"cmd":"git status",
+				"dependsOn":["install.git"],
+				"use":"Check current git repository status."
+			},
+			"CMD":{
+				"cmd":"git status",
+				"dependsOn":["install.git"],
+				"use":"Check current git repository status."
+			},
+			"Linux":{
+				"cmd":"git status",
+				"dependsOn":["install.git"],
+				"use":"Check current git repository status."
+			}
+		},
+		"pull":{
+			"Powershell":{
+				"cmd":"git pull origin main",
+				"dependsOn":["install.git"],
+				"use":"Pull latest changes from the main branch."
+			},
+			"CMD":{
+				"cmd":"git pull origin main",
+				"dependsOn":["install.git"],
+				"use":"Pull latest changes from the main branch."
+			},
+			"Linux":{
+				"cmd":"git pull origin main",
+				"dependsOn":["install.git"],
+				"use":"Pull latest changes from the main branch."
+			}
+		},
+		"push":{
+			"Powershell":{
+				"cmd":"git add . && git commit -m 'Update' && git push",
+				"dependsOn":["install.git"],
+				"use":"Stage, commit, and push changes to the repository."
+			},
+			"CMD":{
+				"cmd":"git add . && git commit -m 'Update' ; git push",
+				"dependsOn":["install.git"],
+				"use":"Stage, commit, and push changes to the repository."
+			},
+			"Linux":{
+				"cmd":"git add . && git commit -m 'Update' && git push",
+				"dependsOn":["install.git"],
+				"use":"Stage, commit, and push changes to the repository."
+			}
+		}
+	},
+"install":{
+    "py":{
+      "Powershell":{
+        "use":"Install Python using choco (admin) or scoop (non-admin)",
+        "cmd":{
+          "scoop":"scoop install python",
+          "choco":"choco install python"
+        },
+        "atPath":"python --version > $null 2>&1",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter python.exe -EA SilentlyContinue",
+        "addToPath":"$env:Path += \";C:\\Users\\<username>\\scoop\\apps\\python\\current\""
+      },
+      "CMD":{
+        "use":"Install Python using choco (admin) or scoop (non-admin)",
+        "cmd":{
+          "scoop":"scoop install python",
+          "choco":"choco install python"
+        },
+        "atPath":"python --version >nul 2>&1",
+        "atDrive":"where /R C:\\ python.exe",
+        "addToPath":"C:\\Users\\<username>\\scoop\\apps\\python\\current"
+      },
+      "Linux":{
+        "use":"Install Python via apt",
+        "cmd":"sudo apt install python3",
+        "atPath":"python3 --version > /dev/null 2>&1",
+        "atDrive":"sudo find / -name python3 2>/dev/null",
+        "addToPath":"export PATH={{path}}:$PATH"
+    }
+  },
+    "pip":{
+      "Powershell":{
+        "use":"Install pip using choco (admin) or scoop (non-admin) via Python",
+        "cmd":{
+          "scoop":"scoop install python", 
+          "choco":"choco install python"
+        },
+        "atPath":"pip --version > $null 2>&1",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter pip.exe -EA SilentlyContinue",
+        "addToPath":"$env:Path += \";C:\\Users\\<username>\\scoop\\apps\\python\\current\\Scripts\""
+      },
+      "CMD":{
+        "use":"Install pip using choco (admin) or scoop (non-admin) via Python",
+        "cmd":{
+          "scoop":"scoop install python",
+          "choco":"choco install python"
+        },
+        "atPath":"pip --version >nul 2>&1",
+        "atDrive":"where /R C:\\ pip.exe",
+        "addToPath":"C:\\Users\\<username>\\scoop\\apps\\python\\current\\Scripts"
+      },
+      "Linux":{
+        "use":"Install pip via apt",
+        "cmd":"sudo apt install python3-pip",
+        "atPath":"pip3 --version > /dev/null 2>&1",
+        "atDrive":"sudo find / -name pip3 2>/dev/null",
+        "addToPath":"export PATH={{path}}:$PATH"
+      }
+    },
+    "cpp":{
+      "Powershell":{
+        "use":"Install g++ (C++) using choco (admin) or scoop (non-admin)",
+        "cmd":{
+          "scoop":"scoop install gcc",
+          "choco":"choco install mingw"
+        },
+        "atPath":"g++ --version > $null 2>&1",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter g++.exe -EA SilentlyContinue",
+        "addToPath":"$env:Path += \";C:\\Program Files\\mingw\\bin\""
+      },
+      "CMD":{
+        "use":"Install g++ (C++) using choco (admin) or scoop (non-admin)",
+        "cmd":{
+          "scoop":"scoop install gcc",
+          "choco":"choco install mingw"
+        },
+        "atPath":"g++ --version >nul 2>&1",
+        "atDrive":"where /R C:\\ g++.exe",
+        "addToPath":"C:\\Program Files\\mingw\\bin"
+      },
+      "Linux":{
+        "use":"Install g++ via apt",
+        "cmd":"sudo apt install g++",
+        "atPath":"g++ --version > /dev/null 2>&1",
+        "atDrive":"sudo find / -name g++ 2>/dev/null",
+        "addToPath":"export PATH={{path}}:$PATH"
+      }
+    },
+    "java":{
+      "Powershell":{
+        "use":"Install Java using choco (admin) or scoop (non-admin)",
+        "cmd":{
+          "scoop":"scoop install openjdk",
+          "choco":"choco install openjdk"
+        },
+        "atPath":"java -version > $null 2>&1",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter java.exe -EA SilentlyContinue",
+        "addToPath":"$env:Path += \";C:\\Program Files\\Java\\jdk-<version>\\bin\""
+      },
+      "CMD":{
+        "use":"Install Java using choco (admin) or scoop (non-admin)",
+        "cmd":{
+          "scoop":"scoop install openjdk",
+          "choco":"choco install openjdk"
+        },
+        "atPath":"java -version >nul 2>&1",
+        "atDrive":"where /R C:\\ java.exe",
+        "addToPath":"C:\\Program Files\\Java\\jdk-<version>\\bin"
+      },
+      "Linux":{
+        "use":"Install Java via apt",
+        "cmd":"sudo apt install default-jdk",
+        "atPath":"java -version > /dev/null 2>&1",
+        "atDrive":"sudo find / -name java 2>/dev/null",
+        "addToPath":"export PATH={{path}}:$PATH"
+      }
+    },
+    "make":{
+      "Powershell":{
+        "use":"Install Make using choco (admin) or scoop (non-admin)",
+        "cmd":{
+          "scoop":"scoop install make",
+          "choco":"choco install make"
+        },
+        "atPath":"make --version > $null 2>&1",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter make.exe -EA SilentlyContinue",
+        "addToPath":"$env:Path += \";C:\\Program Files\\GnuWin32\\bin\""
+      },
+      "CMD":{
+        "use":"Install Make using choco (admin) or scoop (non-admin)",
+        "cmd":{
+          "scoop":"scoop install make",
+          "choco":"choco install make"
+        },
+        "atPath":"make --version >nul 2>&1",
+        "atDrive":"where /R C:\\ make.exe",
+        "addToPath":"C:\\Program Files\\GnuWin32\\bin"
+      },
+      "Linux":{
+        "use":"Install Make via apt",
+        "cmd":"sudo apt install build-essential",
+        "atPath":"make --version > /dev/null 2>&1",
+        "atDrive":"sudo find / -name make 2>/dev/null",
+        "addToPath":"export PATH={{path}}:$PATH"
+      }
+  },
+    "cmake":{
+      "Powershell":{
+        "use":"Install CMake using choco (admin) or scoop (non-admin)",
+        "cmd":{
+          "scoop":"scoop install cmake",
+          "choco":"choco install cmake"
+        },
+        "atPath":"cmake --version > $null 2>&1",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter cmake.exe -EA SilentlyContinue",
+        "addToPath":"$env:Path += \";C:\\Program Files\\CMake\\bin\""
+      },
+      "CMD":{
+        "use":"Install CMake using choco (admin) or scoop (non-admin)",
+        "cmd":{
+          "scoop":"scoop install cmake",
+          "choco":"choco install cmake"
+        },
+        "atPath":"cmake --version >nul 2>&1",
+        "atDrive":"where /R C:\\ cmake.exe",
+        "addToPath":"C:\\Program Files\\CMake\\bin"
+      },
+      "Linux":{
+        "use":"Install CMake via apt",
+        "cmd":"sudo apt install cmake",
+        "atPath":"cmake --version > /dev/null 2>&1",
+        "atDrive":"sudo find / -name cmake 2>/dev/null",
+        "addToPath":"export PATH={{path}}:$PATH"
+      }
+    },
+    "git":{
+      "Powershell":{
+        "use":"Install Git using choco (admin) or scoop (non-admin)",
+        "cmd":{
+          "scoop":"scoop install git",
+          "choco":"choco install git"
+        },
+        "atPath":"git --version > $null 2>&1",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter git.exe -ErrorAction SilentlyContinue",
+        "addToPath":"$env:Path += \";C:\\Program Files\\Git\\bin\""
+      },
+      "CMD":{
+        "use":"Install Git using choco (admin) or scoop (non-admin)",
+        "cmd":{
+          "scoop":"scoop install git",
+          "choco":"choco install git"
+        },
+        "atPath":"git --version >nul 2>&1",
+        "atDrive":"where /R C:\\ git.exe",
+        "addToPath":"C:\\Program Files\\Git\\bin"
+      },
+      "Linux":{
+        "use":"Install Git via apt",
+        "cmd":"sudo apt install git",
+        "atPath":"git --version > /dev/null 2>&1",
+        "atDrive":"sudo find / -name git 2>/dev/null",
+        "addToPath":"export PATH={{path}}:$PATH"
+      }
+    },
+    "vcpkg":{
+      "Powershell":{
+        "use":"Install vcpkg using scoop (non-admin) or manual clone (admin fallback)",
+        "cmd":{
+          "scoop":"scoop install vcpkg",
+          "choco":"git clone https://github.com/microsoft/vcpkg.git C:\\vcpkg && cd C:\\vcpkg && .\\bootstrap-vcpkg.bat"
+        },
+        "atPath":"vcpkg version > $null 2>&1",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter vcpkg.exe -EA SilentlyContinue",
+        "addToPath":"$env:Path += \";C:\\vcpkg\""
+      },
+      "CMD":{
+        "use":"Install vcpkg using scoop (non-admin) or manual clone (admin fallback)",
+        "cmd":{
+          "scoop":"scoop install vcpkg",
+          "choco":"git clone https://github.com/microsoft/vcpkg.git C:\\vcpkg && cd C:\\vcpkg && bootstrap-vcpkg.bat"
+        },
+        "atPath":"vcpkg version >nul 2>&1",
+        "atDrive":"where /R C:\\ vcpkg.exe",
+        "addToPath":"C:\\vcpkg"
+      },
+      "Linux":{
+        "use":"Install vcpkg via git clone and bootstrap script",
+        "cmd":"git clone https://github.com/microsoft/vcpkg.git ~/vcpkg && cd ~/vcpkg && ./bootstrap-vcpkg.sh",
+        "atPath":"~/vcpkg/vcpkg version > /dev/null 2>&1",
+        "atDrive":"find ~ -name vcpkg 2>/dev/null",
+        "addToPath":"export PATH=~/vcpkg:$PATH"
+      }
+    },
+    "all":{
+      "Powershell":{
+        "use":"Install all core tools using scoop for non-admin PowerShell",
+        "cmd":{
+          "scoop":"scoop install python openjdk cmake make git && vcpkg install fmt && pip install -r requirements.txt"
+        },
+        "atPath":"python --version > $null 2>&1 && cmake --version > $null 2>&1 && git --version > $null 2>&1",
+        "atDrive":"Get-Command python,cmake,git -ErrorAction SilentlyContinue",
+        "addToPath":"$env:Path += \";C:\\Users\\<username>\\scoop\\apps\\python\\current\""
+      },
+      "CMD":{
+        "use":"Install all core tools using scoop for non-admin CMD",
+        "cmd":{
+          "scoop":"scoop install python openjdk cmake make git && vcpkg install fmt && pip install -r requirements.txt"
+        },  
+        "atPath":"python --version >nul 2>&1 && cmake --version >nul 2>&1 && git --version >nul 2>&1",
+        "atDrive":"where /R C:\\ python.exe && where /R C:\\ cmake.exe && where /R C:\\ git.exe",
+        "addToPath":"C:\\Users\\<username>\\scoop\\apps\\python\\current"
+      },
+      "Linux":{
+        "use":"Install core tools via apt (excluding vcpkg and pip dependencies)",
+        "cmd":"sudo apt install -y python3 openjdk-17-jdk cmake make git && sudo apt install -y python3-pip && pip3 install -r requirements.txt",
+        "atPath":"python3 --version > /dev/null 2>&1 && cmake --version > /dev/null 2>&1 && git --version > /dev/null 2>&1",
+        "atDrive":"sudo find / -name python3 -o -name cmake -o -name git 2>/dev/null",
+        "addToPath":"export PATH={{path}}:$PATH"
+      }
+    }
+  }
+}
