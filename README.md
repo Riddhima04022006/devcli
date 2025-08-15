@@ -142,34 +142,7 @@ A lightweight cross-shell CLI tool (CMD, PowerShell, Linux) for automating devel
 
 ## High Level Diagram
 
-```mermaid
----
-config:
-  layout: dagre
----
-flowchart TD
-  A["User Input"] --> B["Read JSON Path and Config"]
-  B --> C["Read File to Buffer"]
-  C --> D["Parse JSON"]
-  D --> E["Detect Shell"]
-  E --> G["Find Shell Commands"]
-  G --> X["Resolve Dependencies"]
-  X --> H{"Primary input is install<br>and secondary input is not all?"}
-  H -- No --> I["Replace Placeholders"]
-  I --> J["Run Command"]
-  H -- Yes --> K{"File Exists at Path?"}
-  K -- Yes --> L["Terminate Command"]
-  K -- No --> M{"File Exists at Drive?"}
-  M -- Yes --> N["Add to Path and Terminate"]
-  M -- No --> O{"Shell is Admin?"}
-  O -- Yes --> P["Install using Package Manager"]
-  O -- No --> Q["Install using Scoop"]
-  J --> S["Delete JSON Root"]
-  L --> S
-  N --> S
-  P --> S
-  Q --> S
-  R["Help Print All Commands"]
+<pre> ```mermaid flowchart TD A["User Input"] --> B["Read JSON Path and Config"] B --> C["Read File to Buffer"] C --> D["Parse JSON"] D --> E["Detect Shell"] E --> G["Find Shell Commands"] G --> X["Resolve Dependencies"] X --> H{"Primary input is install<br>and secondary input is not all?"} H -- No --> I["Replace Placeholders"] I --> J["Run Command"] H -- Yes --> K{"File Exists at Path?"} K -- Yes --> L["Terminate Command"] K -- No --> M{"File Exists at Drive?"} M -- Yes --> N["Add to Path and Terminate"] M -- No --> O{"Shell is Admin?"} O -- Yes --> P["Install using Package Manager"] O -- No --> Q["Install using Scoop"] J --> S["Delete JSON Root"] L --> S N --> S P --> S Q --> S R["Help Print All Commands"] ``` </pre>
 
 ## Developer Documentation (LLD)
 
