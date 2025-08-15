@@ -2,16 +2,55 @@
  * @file main.c
  * @brief Implements DevCLI – a cross-platform CLI automation tool.
  *
- * @details This file contains the main logic for parsing a JSON tasks file,
- *          resolving dependencies, detecting the shell environment, and
- *          executing tasks. It uses the cJSON library for parsing and
- *          supports multiple shells (PowerShell, CMD, Bash).
+ * @mainpage DevCLI – A Lightweight Cross-Shell Developer Automation Tool
+ *
+ * @section intro_sec Introduction
+ * @brief Overview
+ * DevCLI is a C-based command-line tool designed to automate developer tasks
+ * across multiple platforms and shells. It uses a JSON configuration file
+ * (`tasks.json`) to define commands, dependencies, and platform-specific
+ * operations, making it highly customizable and extensible.
+ *
+ * @section features_sec Key Features
+ * - Cross-shell support: CMD, PowerShell, Linux shells.
+ * - JSON-driven configuration for tasks and dependencies.
+ * - Placeholder substitution for dynamic user input (`{{path}}`, `{{name}}`).
+ * - Automatic detection of shell environment.
+ * - Installation optimization using tool availability checks.
+ * - Logging for debugging and error tracking.
+ *
+ * @section usage_sec Usage
+ * @code
+ * devcli <command>
+ * devcli help
+ * @endcode
+ *
+ * Example:
+ * @code
+ * devcli install.git
+ * @endcode
+ *
+ * @section structure_sec Project Structure
+ * - @ref init "Initialization & Config"
+ * - @ref exec_core "Execution Core"
+ * - @ref helpers "Helper Utilities"
+ * - @ref sys_utils "System Utilities"
+ * - @ref user_interaction "User Interaction"
+ *
+ * @section build_sec Build Instructions
+ * @code
+ * gcc main.c -lcjson -o devcli
+ * @endcode
+ *
+ * @section license_sec License
+ * MIT License
  *
  * @author Riddhima
  * @date 2025-08-15
  * @version 1.0.0
  * @copyright MIT Licensed
  */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -93,6 +132,11 @@
  */
 const char *shell;
 
+/** @defgroup init Initialization & Configuration
+ *  @brief Functions responsible for setting up environment and configuration.
+ *  @{
+ */
+
 /**
  * @brief Detects the current shell environment and initializes the global `shell` variable.
  *
@@ -104,6 +148,8 @@ const char *shell;
  *          The detected shell name is stored in the global variable `shell`, which
  *          is later used for selecting shell-specific commands.
  *
+ * @ingroup init
+ * 
  * @note This function is called once during program startup and does not require
  *       manual invocation by the user. It ensures that `shell` is initialized for
  *       the program's entire runtime.
@@ -146,6 +192,8 @@ void detectShell(){
  *          program during normal execution, so there is no risk of leaks unless
  *          this behavior is changed by modifying the code.
  *
+ * @ingroup init
+ * 
  * @return char* A heap-allocated string containing the valid path to `tasks.json`.
  *               The current implementation ensures proper cleanup of this memory.
  *               Returns `NULL` if no valid path is found (including invalid user input).
@@ -240,6 +288,8 @@ char* resolveJSONPath() {
  *          in `main()` after use. There is no risk of leaks unless this behavior is
  *          changed by altering the code.
  *
+ * @ingroup init
+ * 
  * @param path Path to the file to be read (typically `tasks.json`).
  *
  * @return char* Pointer to the heap-allocated buffer containing the file contents,
@@ -299,6 +349,13 @@ char* readFileToBuffer(char *path){
     return(tasks);
 }
 
+/** @} */ // end of init group
+
+/** @defgroup helpers Helper Utilities
+ *  @brief Utility functions for string manipulation and command processing.
+ *  @{
+ */
+
 /**
  * @brief Extracts a substring from the given input string based on start and end indices.
  *
@@ -321,6 +378,8 @@ char* readFileToBuffer(char *path){
  * @return char* A heap-allocated substring extracted from the input.
  *               In the current implementation, memory is freed later in the program.
  *
+ * @ingroup helpers
+ * 
  * @note This function assumes valid index values as provided by the program logic.
  *       It does not perform bounds checking internally.
  *
@@ -372,6 +431,8 @@ char *slice(char *userInput, int start, int last){
  *               of the original string if no replacements were made or input was invalid.
  *               Returns `NULL` only if memory allocation fails during replacement.
  *
+ * @ingroup helpers
+ * 
  * @note This function performs in-place replacement by creating temporary buffers
  *       and updating the string iteratively.
  *
@@ -443,6 +504,8 @@ char* replacePlaceholder(char* input, char *val) {
  * @return char* A heap-allocated string containing the wrapped or original command.
  *               Returns `NULL` only if memory allocation fails.
  *
+ * @ingroup helpers
+ * 
  * @note This function uses the global `shell` variable to determine which shell is active.
  *
  * @warning Altering memory handling or removing the wrapper logic without understanding
@@ -483,6 +546,8 @@ char* wrap_for_shell(char* command) {
  * @return bool `true` if the current process has administrative privileges,
  *              `false` otherwise.
  *
+ * @ingroup systemutils
+ * 
  * @note Uses `AllocateAndInitializeSid` and `CheckTokenMembership` internally.
  *
  * @warning Altering privilege-check logic or skipping this step may cause incorrect
@@ -542,6 +607,8 @@ bool isAdmin() {
  *         - `0` → Tool found (either in PATH or added temporarily).
  *         - `1` → Tool not found; installation should proceed.
  *
+ * @ingroup systemutils
+ * 
  * @note This function is used only for `install.*` commands to prevent redundant installations
  *       and ensure tools can be executed immediately after detection.
  *
@@ -625,6 +692,13 @@ int checkAvailability(char *foundAtPath, char *foundAtDrive, char *addFileToPath
     }
 }
 
+/** @} */ // end of systemutils group
+
+/** @defgroup exec Execution Core
+ *  @brief Core logic for command interpretation and execution.
+ *  @{
+ */
+
 /**
  * @brief Executes a user-specified command by resolving it from the JSON configuration.
  *
@@ -669,6 +743,8 @@ int checkAvailability(char *foundAtPath, char *foundAtDrive, char *addFileToPath
  *
  * @return void
  *
+ * @ingroup exec
+ * 
  * @note The function uses recursion for handling dependencies. Excessively deep
  *       dependency chains may impact performance or stack usage.
  *
@@ -828,6 +904,13 @@ void runCommands(cJSON *root, char *userInput, int len){
     free(input2);
 }
 
+/** @} */ // end of exec group
+
+/** @defgroup userinteraction User Interaction
+ *  @brief Functions that handle user assistance and display.
+ *  @{
+ */
+
 /**
  * @brief Displays a list of available commands and their descriptions.
  *
@@ -853,6 +936,8 @@ void runCommands(cJSON *root, char *userInput, int len){
  *
  * @return void
  *
+ * @ingroup userinteraction
+ * 
  * @note This function is read-only and does not modify any data structures.
  *       It does not allocate dynamic memory.
  *
@@ -892,6 +977,8 @@ void help(cJSON *root){
             object=object->next;
         }
 }
+
+/** @} */ // end of userinteraction group
 
 /**
  * @brief Entry point for the DevCLI tool.
