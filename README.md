@@ -4,15 +4,15 @@ A lightweight cross-shell CLI tool (CMD, PowerShell, Linux) for automating devel
 
 ---
 
-## 📦 Resource Download
+## Resource Download
 
-### 📁 cJSON Library
+### cJSON Library
 
 - `cJSON.h` and `cJSON.c` files are included in the repository and will be cloned automatically.
 
 ---
 
-### 🧪 Non-Admin Shell Setup (e.g., PowerShell on VS Code)
+### Non-Admin Shell Setup (e.g., PowerShell on VS Code)
 
 1. **Confirm Shell Type:**
 
@@ -58,7 +58,7 @@ A lightweight cross-shell CLI tool (CMD, PowerShell, Linux) for automating devel
 
 ---
 
-### 🛠 Admin Shell Setup (Using Chocolatey)
+### Admin Shell Setup (Using Chocolatey)
 
 1. **Confirm Shell Type:**
 
@@ -86,7 +86,7 @@ A lightweight cross-shell CLI tool (CMD, PowerShell, Linux) for automating devel
 
 ---
 
-## 🔧 Features
+## Features
 
 - Task automation via JSON config  
 - Cross-platform support (CMD, PowerShell, Linux Shell)  
@@ -98,11 +98,12 @@ A lightweight cross-shell CLI tool (CMD, PowerShell, Linux) for automating devel
 
 ---
 
-## 🚀 Usage
+## Usage
 
-1. **🛠 Build from Source**
+1. **Build from Source**
 
-> ⚠️ No prebuilt `.exe` or binary is provided to avoid security warnings. You must compile the tool manually using GCC (or any C compiler) as shown below.
+> No prebuilt `.exe` or binary is provided to avoid security warnings. You must compile the tool manually using GCC (or any C compiler) as shown below. Ensure `gcc` is available in your PATH (from MinGW or similar compiler toolchains).
+
 - Windows (CMD / PowerShell):
   ```sh
   gcc main.c cJSON.c -o devcli.exe
@@ -131,7 +132,7 @@ A lightweight cross-shell CLI tool (CMD, PowerShell, Linux) for automating devel
 
 ---
 
-## 📂 Files Overview
+## Files Overview
 
 - `main.c`- Main source code  
 - `tasks.json` - Task configuration file  
@@ -139,8 +140,37 @@ A lightweight cross-shell CLI tool (CMD, PowerShell, Linux) for automating devel
 
 ---
 
-## 📄 License
+## High Level Diagram
+
+```mermaid
+---
+config:
+  layout: dagre
+---
+flowchart TD
+  A["User Input"] --> B["Read JSON Path and Config"]
+  B --> C["Read File to Buffer"]
+  C --> D["Parse JSON"]
+  D --> E["Detect Shell"]
+  E --> G["Find Shell Commands"]
+  G --> X["Resolve Dependencies"]
+  X --> H{"Primary input is install<br>and secondary input is not all?"}
+  H -- No --> I["Replace Placeholders"]
+  I --> J["Run Command"]
+  H -- Yes --> K{"File Exists at Path?"}
+  K -- Yes --> L["Terminate Command"]
+  K -- No --> M{"File Exists at Drive?"}
+  M -- Yes --> N["Add to Path and Terminate"]
+  M -- No --> O{"Shell is Admin?"}
+  O -- Yes --> P["Install using Package Manager"]
+  O -- No --> Q["Install using Scoop"]
+  J --> S["Delete JSON Root"]
+  L --> S
+  N --> S
+  P --> S
+  Q --> S
+  R["Help Print All Commands"]
+
+## License
 
 MIT License - see [LICENSE](./LICENSE) for details.
-
-> 🧠 Tip: To understand how this tool works, check `tasks.json` for ready-made examples (e.g., Python, Git, Java). You can add your own tasks by following its structure.

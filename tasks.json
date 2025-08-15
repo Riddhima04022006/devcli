@@ -3,15 +3,15 @@
     "directory": {
       "Powershell":{
         "use":"Create directory to store compiled files.",
-        "cmd": "mkdir {{path}}"
+        "cmd": "mkdir {{name}}"
       },
       "CMD":{
         "use": "Create directory to store compiled files.",
-        "cmd": "mkdir {{path}}"
+        "cmd": "mkdir {{name}}"
       },
       "Linux":{
         "use": "Create directory to store compiled files.",
-        "cmd": "mkdir {{path}}"
+        "cmd": "mkdir {{name}}"
       }
     },
     "filesByCmake":{
@@ -34,34 +34,34 @@
     "gcc":{
       "Powershell":{
         "use":"Compile C files using GCC.",
-        "cmd":"gcc {{path}}.c -o {{path}}",
+        "cmd":"gcc {{name}}.c -o {{name}}",
         "dependsOn":["install.cpp"]
       },
       "CMD": {
         "use":"Compile C files using GCC.",
-        "cmd":"gcc {{path}}.c -o {{path}}",
+        "cmd":"gcc {{name}}.c -o {{name}}",
         "dependsOn":["install.cpp"]
       },
       "Linux": {
         "use":"Compile C files using GCC.",
-        "cmd":"gcc {{path}}.c -o {{path}}",
+        "cmd":"gcc {{name}}.c -o {{name}}",
         "dependsOn":["install.cpp"]
       }
     },
     "g++": {
       "Powershell":{
         "use":"Compile C++ files using G++.",
-        "cmd":"g++ {{path}}.cpp -o {{path}}",
+        "cmd":"g++ {{name}}.cpp -o {{name}}",
         "dependsOn":["install.cpp"]
       },
       "CMD":{
         "use":"Compile C++ files using G++.",
-        "cmd":"g++ {{path}}.cpp -o {{path}}",
+        "cmd":"g++ {{name}}.cpp -o {{name}}",
         "dependsOn":["install.cpp"]
       },
       "Linux":{
         "use":"Compile C++ files using G++.",
-        "cmd":"g++ {{path}}.cpp -o {{path}}",
+        "cmd":"g++ {{name}}.cpp -o {{name}}",
         "dependsOn":["install.cpp"]
       }
     },
@@ -85,34 +85,34 @@
     "java":{
       "Powershell":{
         "use":"Compile Java files using javac.",
-        "cmd":"javac {{path}}.java",
+        "cmd":"javac {{name}}.java",
         "dependsOn":["install.java"]
       },
       "CMD":{
         "use":"Compile Java files using javac.",
-        "cmd":"javac {{path}}.java",
+        "cmd":"javac {{name}}.java",
         "dependsOn":["install.java"]
       },
       "Linux":{
         "use":"Compile Java files using javac",
-        "cmd":"javac {{path}}.java",
+        "cmd":"javac {{name}}.java",
         "dependsOn":["install.java"]
       }
     },
     "python":{
       "Powershell":{
         "use":"Check for syntax errors by compiling Python files.",
-        "cmd":"python -m py_compile {{path}}.py",
+        "cmd":"python -m py_compile {{name}}.py",
         "dependsOn":["install.py"]
       },
       "CMD": {
         "use":"Check for syntax errors by compiling Python files.",
-        "cmd":"py -m py_compile {{path}}.py",
+        "cmd":"py -m py_compile {{name}}.py",
         "dependsOn":["install.py"]
       },
       "Linux":{
         "use":"Check for syntax errors by compiling Python files.",
-        "cmd":"python3 -m py_compile {{path}}.py",
+        "cmd":"python3 -m py_compile {{name}}.py",
         "dependsOn":["install.py"]
       }
     }
@@ -136,53 +136,53 @@
   },
 
   "run":{
-    "main":{
+    "gcc":{
       "Powershell":{
-        "cmd":".\\{{path}}.exe",
+        "cmd":".\\{{name}}.exe",
         "dependsOn":["build.gcc"],
         "use":"Run a compiled C/C++ executable."
       },
       "CMD":{
-        "cmd":".\\{{path}}.exe",
+        "cmd":".\\{{name}}.exe",
         "dependsOn":["build.gcc"],
         "use":"Run a compiled C/C++ executable."
       },
       "Linux":{
-        "cmd":"./{{path}}",
+        "cmd":"./{{name}}",
         "dependsOn":["build.gcc"],
         "use":"Run a compiled C/C++ executable."
       }
     },
     "java":{
       "Powershell":{
-        "cmd":"java {{path}}",
+        "cmd":"java {{name}}",
         "dependsOn":["build.java"],
         "use":"Run a compiled Java class."
       },
       "CMD":{
-        "cmd":"java {{path}}",
+        "cmd":"java {{name}}",
         "dependsOn":["build.java"],
         "use":"Run a compiled Java class."
       },
       "Linux":{
-        "cmd":"java {{path}}",
+        "cmd":"java {{name}}",
         "dependsOn":["build.java"],
         "use":"Run a compiled Java class."
       }
     },
     "python":{
       "Powershell":{
-        "cmd":"python {{path}}.py",
+        "cmd":"python {{name}}.py",
         "dependsOn":["install.py"],
       "use":"Run a Python script using Python."
       },
       "CMD":{
-        "cmd":"py {{path}}.py",
+        "cmd":"py {{name}}.py",
         "dependsOn":["install.py"],
         "use":"Run a Python script using Python Launcher."
       },
       "Linux":{
-        "cmd":"python3 {{path}}.py",
+        "cmd":"python3 {{name}}.py",
         "dependsOn":["install.py"],
         "use":"Run a Python script using Python 3."
       }
@@ -219,15 +219,15 @@
     },
     "exe":{
       "Powershell":{
-        "cmd":"Remove-Item {{path}}.exe -Force",
+        "cmd":"Remove-Item {{name}}.exe -Force",
         "use":"Delete the compiled executable file."
       },
       "CMD":{
-        "cmd":"del {{path}}.exe",
+        "cmd":"del {{name}}.exe",
         "use":"Delete the compiled executable file."
       },
       "Linux":{
-        "cmd":"rm {{path}}",
+        "cmd":"rm {{name}}",
         "use":"Delete the compiled executable file."
       }
     },
@@ -250,17 +250,17 @@
   "test":{
   	"gcc":{
 	  	"Powershell":{
-		  	"cmd":"gcc {{path}}.c -o {{path}} && .\\{{path}}.exe",
+		  	"cmd":"gcc {{name}}.c -o {{name}}; if ($?) { .\\{{name}}.exe }",
 			  "dependsOn":["build.gcc"],
   			"use":"Compile and run the C program using GCC."
 	  	},
 		  "CMD":{
-			  "cmd":"gcc {{path}}.c -o {{path}} && .\\{{path}}.exe",
+			  "cmd":"gcc {{name}}.c -o {{name}} && .\\{{name}}.exe",
   			"dependsOn":["build.gcc"],
 	  		"use":"Compile and run the C program using GCC."
 		  },
   		"Linux":{
-	  		"cmd":"gcc {{path}}.c -o {{path}} && ./{{path}}",
+	  		"cmd":"gcc {{name}}.c -o {{name}} && ./{{name}}",
 		  	"dependsOn":["build.gcc"],
 			  "use":"Compile and run the C program using GCC."
   		}
@@ -284,17 +284,17 @@
 	  },
   	"java":{
 	  	"Powershell":{
-		  	"cmd":"java org.junit.runner.JUnitCore {{path}}Test",
+		  	"cmd":"java org.junit.runner.JUnitCore {{name}}Test",
 			  "dependsOn":["build.java"],
   			"use":"Execute the Java JUnit test class."
 	  	},
 		  "CMD":{
-			  "cmd":"java org.junit.runner.JUnitCore {{path}}Test",
+			  "cmd":"java org.junit.runner.JUnitCore {{name}}Test",
   			"dependsOn":["build.java"],
 	  		"use":"Execute the Java JUnit test class."
 		  },
   		"Linux":{
-	  		"cmd":"java org.junit.runner.JUnitCore {{path}}Test",
+	  		"cmd":"java org.junit.runner.JUnitCore {{name}}Test",
 		  	"dependsOn":["build.java"],
 			  "use":"Execute the Java JUnit test class."
   		}
@@ -320,17 +320,17 @@
 		},
 		"cpp":{
 			"Powershell":{
-				"cmd":"clang-tidy {{path}}.cpp",
+				"cmd":"clang-tidy {{name}}.cpp",
 				"dependsOn":["install.cpp"],
 				"use":"Lint C++ code using clang-tidy."
 			},
 			"CMD":{
-				"cmd":"clang-tidy {{path}}.cpp",
+				"cmd":"clang-tidy {{name}}.cpp",
 				"dependsOn":["install.cpp"],
 				"use":"Lint C++ code using clang-tidy."
 			},
 			"Linux":{
-				"cmd":"clang-tidy {{path}}.cpp",
+				"cmd":"clang-tidy {{name}}.cpp",
 				"dependsOn":["install.cpp"],
 				"use":"Lint C++ code using clang-tidy."
 			}
@@ -399,7 +399,7 @@
           "choco":"choco install python"
         },
         "atPath":"python --version > $null 2>&1",
-        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter python.exe -EA SilentlyContinue",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter python.exe -ErrorAction SilentlyContinue",
         "addToPath":"$env:Path += \";C:\\Users\\<username>\\scoop\\apps\\python\\current\""
       },
       "CMD":{
@@ -428,7 +428,7 @@
           "choco":"choco install python"
         },
         "atPath":"pip --version > $null 2>&1",
-        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter pip.exe -EA SilentlyContinue",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter pip.exe -ErrorAction SilentlyContinue",
         "addToPath":"$env:Path += \";C:\\Users\\<username>\\scoop\\apps\\python\\current\\Scripts\""
       },
       "CMD":{
@@ -457,7 +457,7 @@
           "choco":"choco install mingw"
         },
         "atPath":"g++ --version > $null 2>&1",
-        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter g++.exe -EA SilentlyContinue",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter g++.exe -ErrorAction SilentlyContinue",
         "addToPath":"$env:Path += \";C:\\Program Files\\mingw\\bin\""
       },
       "CMD":{
@@ -486,7 +486,7 @@
           "choco":"choco install openjdk"
         },
         "atPath":"java -version > $null 2>&1",
-        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter java.exe -EA SilentlyContinue",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter java.exe -ErrorAction SilentlyContinue",
         "addToPath":"$env:Path += \";C:\\Program Files\\Java\\jdk-<version>\\bin\""
       },
       "CMD":{
@@ -515,7 +515,7 @@
           "choco":"choco install make"
         },
         "atPath":"make --version > $null 2>&1",
-        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter make.exe -EA SilentlyContinue",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter make.exe -ErrorAction SilentlyContinue",
         "addToPath":"$env:Path += \";C:\\Program Files\\GnuWin32\\bin\""
       },
       "CMD":{
@@ -544,7 +544,7 @@
           "choco":"choco install cmake"
         },
         "atPath":"cmake --version > $null 2>&1",
-        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter cmake.exe -EA SilentlyContinue",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter cmake.exe -ErrorAction SilentlyContinue",
         "addToPath":"$env:Path += \";C:\\Program Files\\CMake\\bin\""
       },
       "CMD":{
@@ -602,7 +602,7 @@
           "choco":"git clone https://github.com/microsoft/vcpkg.git C:\\vcpkg && cd C:\\vcpkg && .\\bootstrap-vcpkg.bat"
         },
         "atPath":"vcpkg version > $null 2>&1",
-        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter vcpkg.exe -EA SilentlyContinue",
+        "atDrive":"Get-ChildItem -Path C:\\ -Recurse -Filter vcpkg.exe -ErrorAction SilentlyContinue",
         "addToPath":"$env:Path += \";C:\\vcpkg\""
       },
       "CMD":{
