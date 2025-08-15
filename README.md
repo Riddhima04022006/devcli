@@ -171,6 +171,18 @@ flowchart TD
   Q --> S
   R["Help Print All Commands"]
 
+## Developer Documentation (LLD)
+
+A detailed low-level design (LLD) document generated using Doxygen is available:
+
+[View LLD Documentation](link-to-html-or-pdf)
+
+This document includes:
+- Internal architecture details
+- Function-level explanations
+- Dependency resolution logic
+- Shell detection and command execution flow
+
 ## License
 
 MIT License - see [LICENSE](./LICENSE) for details.
