@@ -1,0 +1,16 @@
+<map id="runCommands" name="runCommands">
+<area shape="rect" id="Node000001" title="Executes a user&#45;specified command by resolving it from the JSON configuration." alt="" coords="5,131,112,157"/>
+<area shape="poly" id="edge6_Node000001_Node000001" title=" " alt="" coords="30,132,25,122,28,112,40,106,59,104,79,107,89,113,87,118,77,112,58,109,41,111,32,116,30,121,34,129"/>
+<area shape="rect" id="Node000002" href="$group__helpers.html#gad2bea3d45682bbf307d24ef29c7eb95b" title="Checks if a tool is already installed and handles PATH adjustments if necessary." alt="" coords="166,5,285,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="70,129,107,91,158,48,177,37,179,42,161,53,111,94,74,133"/>
+<area shape="rect" id="Node000003" href="$group__helpers.html#ga65bed1849cdeaf1d034b119cebfa50ba" title="Wraps a command for execution based on the detected shell environment." alt="" coords="339,31,444,57"/>
+<area shape="poly" id="edge8_Node000001_Node000003" title=" " alt="" coords="83,128,118,109,159,92,244,68,323,52,324,57,245,73,161,97,120,114,85,132"/>
+<area shape="rect" id="Node000004" href="$group__helpers.html#ga16e77a02e99d1690106464d9962cf0eb" title="Checks whether the current process has administrative privileges." alt="" coords="191,131,260,157"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="112,141,176,141,176,147,112,147"/>
+<area shape="rect" id="Node000005" href="$group__helpers.html#gafa1c2b19990d1d340a6edc4fefcbd3e7" title="Replaces placeholders in a command string with user&#45;provided values." alt="" coords="160,181,291,208"/>
+<area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="106,155,165,174,164,179,104,161"/>
+<area shape="rect" id="Node000006" href="$group__helpers.html#ga408104dd64a2dd600c3927853484ddf7" title="Extracts a substring from the given input string based on start and end indices." alt="" coords="201,232,250,259"/>
+<area shape="poly" id="edge7_Node000001_Node000006" title=" " alt="" coords="77,156,114,186,161,218,188,230,186,235,158,222,111,190,73,160"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="286,25,324,31,323,36,285,30"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="197,132,192,122,195,112,207,106,225,104,245,107,256,113,253,118,244,112,225,109,208,111,199,116,197,121,201,129"/>
+</map>

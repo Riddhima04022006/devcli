@@ -1,0 +1,5 @@
+<map id="checkAvailability" name="checkAvailability">
+<area shape="rect" id="Node000001" title="Checks if a tool is already installed and handles PATH adjustments if necessary." alt="" coords="5,5,125,32"/>
+<area shape="rect" id="Node000002" href="$group__helpers.html#ga65bed1849cdeaf1d034b119cebfa50ba" title="Wraps a command for execution based on the detected shell environment." alt="" coords="173,5,278,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,16,157,16,157,21,125,21"/>
+</map>

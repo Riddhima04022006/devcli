@@ -1,0 +1,11 @@
+<map id="wrap_for_shell" name="wrap_for_shell">
+<area shape="rect" id="Node000001" title="Wraps a command for execution based on the detected shell environment." alt="" coords="424,31,530,57"/>
+<area shape="rect" id="Node000002" href="$group__helpers.html#gad2bea3d45682bbf307d24ef29c7eb95b" title="Checks if a tool is already installed and handles PATH adjustments if necessary." alt="" coords="257,5,376,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="409,36,376,31,377,25,410,31"/>
+<area shape="rect" id="Node000003" href="$group__exec.html#gaa28cf299b0777fb57b91dcfb68c5d65d" title="Executes a user&#45;specified command by resolving it from the JSON configuration." alt="" coords="103,31,209,57"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="409,47,210,47,210,41,409,41"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="242,33,210,38,209,33,241,28"/>
+<area shape="poly" id="edge4_Node000003_Node000003" title=" " alt="" coords="176,17,169,12,156,9,143,11,137,16,135,22,138,29,133,31,130,22,132,13,141,6,156,4,171,7,180,13"/>
+<area shape="rect" id="Node000004" href="$main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Entry point for the DevCLI tool." alt="" coords="5,31,55,57"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="87,47,55,47,55,41,87,41"/>
+</map>

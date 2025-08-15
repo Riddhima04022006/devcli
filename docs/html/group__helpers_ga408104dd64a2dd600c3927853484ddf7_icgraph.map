@@ -1,0 +1,8 @@
+<map id="slice" name="slice">
+<area shape="rect" id="Node000001" title="Extracts a substring from the given input string based on start and end indices." alt="" coords="257,29,305,56"/>
+<area shape="rect" id="Node000002" href="$group__exec.html#gaa28cf299b0777fb57b91dcfb68c5d65d" title="Executes a user&#45;specified command by resolving it from the JSON configuration." alt="" coords="103,29,209,56"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="241,45,210,45,210,40,241,40"/>
+<area shape="poly" id="edge3_Node000002_Node000002" title=" " alt="" coords="176,16,169,10,156,8,143,10,137,14,135,20,138,28,133,30,130,21,132,11,141,5,156,3,171,5,180,12"/>
+<area shape="rect" id="Node000003" href="$main_8c.html#a0ddf1224851353fc92bfbff6f499fa97" title="Entry point for the DevCLI tool." alt="" coords="5,29,55,56"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="87,45,55,45,55,40,87,40"/>
+</map>
