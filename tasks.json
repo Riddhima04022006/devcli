@@ -482,7 +482,7 @@
       "Powershell":{
         "use":"Install Java using choco (admin) or scoop (non-admin)",
         "cmd":{
-          "scoop":"scoop install openjdk",
+          "scoop":"scoop bucket add java; if ($?) { scoop install openjdk }",
           "choco":"choco install openjdk"
         },
         "atPath":"java -version > $null 2>&1",
@@ -492,7 +492,7 @@
       "CMD":{
         "use":"Install Java using choco (admin) or scoop (non-admin)",
         "cmd":{
-          "scoop":"scoop install openjdk",
+          "scoop":"scoop bucket add java && scoop install openjdk",
           "choco":"choco install openjdk"
         },
         "atPath":"java -version >nul 2>&1",
