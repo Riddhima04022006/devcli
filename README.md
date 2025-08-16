@@ -180,6 +180,10 @@ This document includes:
 - Dependency resolution logic
 - Shell detection and command execution flow
 
+## Demo
+
+![Demo](demo.gif)
+
 ## License
 
 MIT License - see [LICENSE](./LICENSE) for details.
